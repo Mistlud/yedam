@@ -25,9 +25,11 @@ public class IfExample {
 			} else {
 				System.out.println("C-");
 			}
-		} else {
+		} else if (score >= 60) {
+			System.out.println("D");
+		} else
 			System.out.println("F");
-		}
+
 		System.out.println("Program End");
 		snc.close();
 	}
