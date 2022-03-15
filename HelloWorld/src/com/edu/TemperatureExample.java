@@ -18,6 +18,8 @@ public class TemperatureExample {
 		if (cDeg <= 30.0) {
 			System.out.println("살만하네용");
 		}
+		
+		scn.close();
 	}
 
 }
