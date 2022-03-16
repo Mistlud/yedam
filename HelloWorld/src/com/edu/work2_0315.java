@@ -27,9 +27,9 @@ public class work2_0315 {
 			}
 		} else {
 			if (a > b) {
-				System.out.println("정렬 결과 : " + a + "," + b + "," + c);
-			} else {
 				System.out.println("정렬 결과 : " + b + "," + a + "," + c);
+			} else {
+				System.out.println("정렬 결과 : " + a + "," + b + "," + c);
 			}
 		}
 		scn.close();
