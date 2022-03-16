@@ -21,16 +21,17 @@ public class UserExample {
 		users[2].setUserTel("010-0101-2220");
 		users[2].setUserP(1600);
 
-//		System.out.println(users[0].getUserInfo());
-//		System.out.println(users[1].getUserInfo());
-//		System.out.println(users[2].getUserInfo());
+		System.out.println(users[0].getUserInfo());
+		System.out.println(users[1].getUserInfo());
+		System.out.println(users[2].getUserInfo());
 
 		for (int i = 0; i < users.length; i++) {
 //			if (users[i].getUserG() == "A") {
 //				System.out.println(users[i].getUserInfo());
-			if (users[i].getUserP() > 1000) {
-				System.out.println(users[i].getUserInfo());
-			}
+//		}
+//			if (users[i].getUserP() > 1000) {
+//				System.out.println(users[i].getUserInfo());
+//		}
 		}
 	}
 }
