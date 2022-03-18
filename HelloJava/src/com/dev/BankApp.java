@@ -23,6 +23,8 @@ public class BankApp {
 			} else if (menu == 4) {
 				nowCash();
 			} else if (menu == 5) {
+				cashSend();
+			} else if (menu == 6) {
 				break;
 			} else if (menu == 9) {
 				showList();
@@ -36,7 +38,7 @@ public class BankApp {
 
 	public static void printMenu() {
 		String menu = "\r\n" //
-				+ "1. 계좌 생성 | 2. 입금 | 3. 출금 | 4. 조회 | 5. 종료";
+				+ "1. 계좌 생성 | 2. 입금 | 3. 출금 | 4. 조회 | 5. 송금 | 6. 종료";
 		System.out.println(menu);
 	} // 메뉴 출력
 
@@ -164,6 +166,62 @@ public class BankApp {
 			}
 		}
 	} // 숨김 메뉴
+
+	public static void cashSend() {
+		System.out.print("출금계좌 번호 > ");
+		String ano = scn.next();
+		for (int i = 0; i < banks.length; i++) {
+			if (searchAccountNo(ano) == null) {
+				System.out.println("없는 계좌번호입니다.");
+				return;
+			}
+		}
+		System.out.println("계좌 내용을 확인합니다.");
+		System.out.println(showown(ano));
+		System.out.print("송금할 금액 > ");
+		int sendMoney = scn.nextInt();
+		if (searchAccountNo(ano).getMoney() < sendMoney) {
+			System.out.println("잔액이 부족합니다.");
+		}
+//		for (int i = 0; i < banks.length; i++) {
+//			if (banks[i] != null && banks[i].getMoney() < sendMoney) {
+//				System.out.println("잔액이 부족합니다.");
+//				return;
+//			}
+//		}
+		System.out.print("입금계좌 번호 > ");
+		String anoR = scn.next();
+		for (int i = 0; i < banks.length; i++) {
+			if (searchAccountNo(anoR) == null) {
+				System.out.println("없는 계좌번호입니다.");
+				return;
+			}
+		}
+		String senU = "senU";
+		String recU = "resU";
+		for (int i = 0; i < banks.length; i++) {
+			if (banks[i] != null && banks[i].getAccInfo().equals(ano)) {
+				senU = banks[i].getAccName();
+			}
+			if (banks[i] != null && banks[i].getAccInfo().equals(anoR)) {
+				recU = banks[i].getAccName();
+			}
+		}
+		System.out.println(senU + "님의 계좌에서 " + recU + "님의 계좌로 송금합니다.");
+		System.out.println("송금액 : " + sendMoney);
+
+		for (int i = 0; i < banks.length; i++) {
+			if (banks[i] != null && banks[i].getAccInfo().equals(ano)) {
+				int anoM = banks[i].getMoney();
+				banks[i].setMoney(anoM - sendMoney);
+			}
+			if (banks[i] != null && banks[i].getAccInfo().equals(anoR)) {
+				int anoRM = banks[i].getMoney();
+				banks[i].setMoney(anoRM + sendMoney);
+			}
+		}
+		System.out.println("정상적으로 처리되었습니다.");
+	}
 
 	public static Account searchAccountNo(String accInfo) {
 		for (int i = 0; i < banks.length; i++) {
