@@ -26,6 +26,7 @@ public class BankApp {
 				break;
 			} else if (menu == 9) {
 				showList();
+
 			} else {
 				System.out.println("잘못된 입력입니다.");
 			}
@@ -43,25 +44,40 @@ public class BankApp {
 		System.out.println("신규 계좌를 개설합니다.");
 		System.out.print("계좌 번호 > ");
 		String accNo = scn.next();
+		if (searchAccountNo(accNo) != null) {
+			System.out.println("이미 존재하는 계좌번호입니다.");
+			return;
+		}
 		System.out.print("예금주 > ");
 		String accInfo = scn.next();
 		System.out.print("예금액 > ");
 		int accMoney = scn.nextInt();
+		if (accMoney > 100000) { // 한도액 100000
+			System.out.println("예금 한도액을 초과하였습니다.");
+			return;
+		}
 		Account accnt = new Account(accNo, accInfo, accMoney);
-
 		for (int i = 0; i < banks.length; i++) {
 			if (banks[i] == null) {
 				banks[i] = accnt;
 				break;
 			}
+
 		}
-		System.out.println("계좌가 개설되었습니다.");
+
+		System.out.println(accInfo + "님의 계좌가 개설되었습니다.");
 
 	} // 계좌 생성
 
 	public static void cashIn() {
 		System.out.print("계좌번호 > ");
 		String ano = scn.next();
+		for (int i = 0; i < banks.length; i++) {
+			if (searchAccountNo(ano) == null) {
+				System.out.println("없는 계좌번호입니다.");
+				return;
+			}
+		}
 		System.out.print("예금액 > ");
 		int amt = scn.nextInt();
 		int checkcnt = 0;
@@ -69,7 +85,7 @@ public class BankApp {
 			if (banks[i] != null && banks[i].getAccInfo().equals(ano)) {
 				checkcnt = 1;
 				int curAmt = banks[i].getMoney();
-				if (curAmt + amt > 100000) {
+				if (curAmt + amt > 100000) { // 한도액
 					checkcnt = 2;
 					break;
 				}
@@ -77,27 +93,68 @@ public class BankApp {
 				break;
 			} else {
 				checkcnt = 0;
-				
+
 			}
 		}
-		if (checkcnt == 1) {
-			System.out.println("정상적으로 처리되었습니다.");
-		} else if (checkcnt == 0) {
+		if (checkcnt == 0) {
 			System.out.println("잘못된 입력입니다.");
+		} else if (checkcnt == 1) {
+			System.out.println("정상적으로 처리되었습니다.");
+			System.out.println(showown(ano));
 		} else if (checkcnt == 2) {
 			System.out.println("예금 한도액을 초과하였습니다.");
+			System.out.println(showown(ano));
 		}
 
 	} // 예금 처리
 
 	public static void cashOut() {
-		System.out.println("출금");
+		System.out.print("계좌번호 > ");
+		String ano = scn.next();
+		for (int i = 0; i < banks.length; i++) {
+			if (searchAccountNo(ano) == null) {
+				System.out.println("없는 계좌번호입니다.");
+				return;
+			}
+		}
+		System.out.print("출금액 > ");
+		int amt = scn.nextInt();
+		int checkcnto = 0;
+		for (int i = 0; i < banks.length; i++) {
+			if (banks[i] != null && banks[i].getAccInfo().equals(ano)) {
+				checkcnto = 1;
+				int curAmt = banks[i].getMoney();
+				if (curAmt - amt < 0) {
+					checkcnto = 2;
+					break;
+				}
+				banks[i].setMoney(curAmt - amt);
+				break;
+			} else {
+				checkcnto = 0;
 
-	} // 출금 처리
+			}
+		}
+		if (checkcnto == 0) {
+			System.out.println("잘못된 입력입니다.");
+		} else if (checkcnto == 1) {
+			System.out.println("정상적으로 처리되었습니다.");
+			System.out.println(showown(ano));
+		} else if (checkcnto == 2) {
+			System.out.println("출금 한도액을 초과하였습니다.");
+			System.out.println(showown(ano));
+		}
+	}
 
 	public static void nowCash() {
-		System.out.println("잔액");
-
+		System.out.println("잔액을 조회합니다.");
+		System.out.print("계좌번호 > ");
+		String ano = scn.next();
+		if (showown(ano) == null) {
+			System.out.println("조회할 수 없는 계좌번호입니다.");
+		} else {
+			System.out.println(showown(ano));
+		}
 	} // 잔액 조회
 
 	public static void showList() {
@@ -108,4 +165,23 @@ public class BankApp {
 		}
 	} // 숨김 메뉴
 
+	public static Account searchAccountNo(String accInfo) {
+		for (int i = 0; i < banks.length; i++) {
+			if (banks[i] != null && banks[i].getAccInfo().equals(accInfo)) {
+				return banks[i];
+			}
+		}
+		return null;
+	}
+
+	public static String showown(String showown) {
+		for (int i = 0; i < banks.length; i++) {
+			if (banks[i] != null && banks[i].getAccInfo().equals(showown)) {
+				return "계좌번호 : " + banks[i].getAccInfo() + //
+						" | 예금주명 : " + banks[i].getAccName() + //
+						" | 예금액 : " + banks[i].getMoney();
+			}
+		}
+		return null;
+	}
 }
