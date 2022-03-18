@@ -183,17 +183,14 @@ public class BankApp {
 		if (searchAccountNo(ano).getMoney() < sendMoney) {
 			System.out.println("잔액이 부족합니다.");
 		}
-//		for (int i = 0; i < banks.length; i++) {
-//			if (banks[i] != null && banks[i].getMoney() < sendMoney) {
-//				System.out.println("잔액이 부족합니다.");
-//				return;
-//			}
-//		}
 		System.out.print("입금계좌 번호 > ");
 		String anoR = scn.next();
 		for (int i = 0; i < banks.length; i++) {
 			if (searchAccountNo(anoR) == null) {
 				System.out.println("없는 계좌번호입니다.");
+				return;
+			} else if (searchAccountNo(anoR).getMoney() >= 100000) {
+				System.out.println("예금 한도액을 초과합니다.");
 				return;
 			}
 		}
