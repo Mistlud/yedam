@@ -6,11 +6,22 @@ public class Account {
 	private String accName; // 예금주명
 	private int money; // 예금액
 
+	public static String bankName;
+	static {
+		bankName = "한일은행";
+	}
+	public static void showBankName() {
+		System.out.println("한일은행입니다");
+	}
+
 	public Account(String accInfo, String accName, int money) {
 		super();
 		this.accInfo = accInfo;
 		this.accName = accName;
 		this.money = money;
+	}
+
+	public Account(String s, String s2) {
 	}
 
 	public String getAccInfo() {
