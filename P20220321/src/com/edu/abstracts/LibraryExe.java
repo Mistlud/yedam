@@ -4,7 +4,17 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class LibraryExe {
-	public static void main(String[] args) {
+	private static LibraryExe singleton = new LibraryExe();
+
+	private LibraryExe() {
+	}
+
+	public static LibraryExe getInstance() {
+		return singleton; // 다른 메소드에서 실체를 만들어줘야 함, new 할당 불가능
+	} //만들어놓았던 정적 필드 하나를 다른 곳에서 생성자 통해 호출
+
+	// public static void main(String[] args) {
+	public void run() {
 		// title, author, price save
 		// show list;
 		Scanner scn = new Scanner(System.in);
@@ -63,6 +73,7 @@ public class LibraryExe {
 			}
 		}
 		System.out.println("EoP");
+		scn.close();
 
 	}
 
