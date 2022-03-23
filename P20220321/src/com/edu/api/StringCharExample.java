@@ -1,22 +1,17 @@
 package com.edu.api;
 
+import java.util.Scanner;
+
 public class StringCharExample {
 
 	public static void main(String[] args) {
+		Scanner scn = new Scanner(System.in);
+		System.out.println("주민번호를 입력하십쇼");
+		IDCheck idcheck = new IDCheck();
+		String abc = scn.nextLine();
+		idcheck.getGender(abc);
+		scn.close();
 
-		String ssn = "001235-2415487";
-		char sex = ssn.charAt(7);
-		switch (sex) {
-		case '1':
-		case '3':
-			System.out.println("남자");
-			break;
-
-		case '2':
-		case '4':
-			System.out.println("여자");
-			break;
-		}
 	}
 
 }
