@@ -10,8 +10,6 @@ public class Student {
 	public Student() {
 	}
 
-
-
 	public Student(int stdnum, String stdName, int engS, int korS) {
 		super();
 		Stdnum = stdnum;
@@ -19,8 +17,6 @@ public class Student {
 		EngS = engS;
 		KorS = korS;
 	}
-
-
 
 	public int getStdnum() {
 		return Stdnum;
@@ -56,7 +52,8 @@ public class Student {
 
 	@Override
 	public String toString() {
-		return "학생번호 : " + Stdnum + ", 학생이름 : " + StdName + ", 영어점수 : " + EngS + ", 국어점수 : " + KorS;
+		return "학생번호 : " + Stdnum + " | 학생이름 : " + StdName + " | 영어점수 : " + //
+				EngS + " | 국어점수 : " + KorS;
 	}
 
 }

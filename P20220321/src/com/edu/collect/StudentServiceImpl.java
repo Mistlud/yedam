@@ -22,4 +22,15 @@ public class StudentServiceImpl implements StudentService {
 	public void modStudent(Student student) {
 	}
 
+	@Override
+	public Student delete(int sno) {
+
+		return null;
+	}
+
+	@Override
+	public List<Student> searchStudent(String name) {
+		return null;
+	}
+
 }
