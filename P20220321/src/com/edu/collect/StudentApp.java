@@ -9,10 +9,10 @@ public class StudentApp {
 	Scanner scn = new Scanner(System.in);
 	List<Student> list = new ArrayList<Student>();
 
-	public StudentApp() {
-		list.add(new Student(101, "Firis", 80, 80));
-
-	}
+//	public StudentApp() {
+//		list.add(new Student(101, "Firis", 80, 80));
+//
+//	}
 
 	public class StudentServiceImpl implements StudentService {
 
@@ -68,10 +68,15 @@ public class StudentApp {
 			return searchList;
 		}
 
+		@Override
+		public void saveToFile() {
+			System.exit(0);
+		}
+
 	}// Impl끝
 
 	public void execute() {
-		StudentService service = new StudentServiceImpl();
+		StudentService service = new StudentServiceFile();
 		// menu 1추가 2리스트 3선택조회 4수정 5종료(9번으로)
 		while (true) {
 			System.out.println("\n1. 추가 | 2. 리스트 | 3. 조회 | 4. 수정 | 5. 삭제 | 6. 검색 | 9. 종료");
@@ -143,6 +148,7 @@ public class StudentApp {
 
 			} else if (menu == 9) {
 				System.out.println("종료합니다.");
+				service.saveToFile();
 				break;
 			} else {
 				System.out.println("잘못된 입력입니다");

@@ -16,4 +16,6 @@ public interface StudentService {
 	public List<Student> searchStudent(String name);
 	// 학생 이름으로 조회 (없거나, 2인이상 나올수있음), 컬렉션 타입으로 반환ㅇㅇ toString사용?
 
+	public void saveToFile();
+
 }
