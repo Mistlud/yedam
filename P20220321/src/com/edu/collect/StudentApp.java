@@ -9,10 +9,10 @@ public class StudentApp {
 	Scanner scn = new Scanner(System.in);
 	List<Student> list = new ArrayList<Student>();
 
-//	public StudentApp() {
-//		list.add(new Student(101, "Firis", 80, 80));
-//
-//	}
+	public StudentApp() {
+		list.add(new Student(101, "Firis", 80, 80));
+
+	}
 
 	public class StudentServiceImpl implements StudentService {
 
@@ -111,8 +111,7 @@ public class StudentApp {
 				if (student == null) {
 					System.out.println("조회 결과가 없습니다.");
 				} else {
-					System.out.println(student.toString());
-
+					System.out.println(student.toString()); 
 				}
 			} else if (menu == 4) {
 				System.out.print("수정할 학생 번호 > ");
