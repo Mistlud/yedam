@@ -9,11 +9,6 @@ public class StudentApp {
 	Scanner scn = new Scanner(System.in);
 	List<Student> list = new ArrayList<Student>();
 
-	public StudentApp() {
-		list.add(new Student(101, "Firis", 80, 80));
-
-	}
-
 	public class StudentServiceImpl implements StudentService {
 
 		@Override
@@ -76,7 +71,7 @@ public class StudentApp {
 	}// Impl끝
 
 	public void execute() {
-		StudentService service = new StudentServiceFile();
+		StudentService service = new StudentServiceOracle();
 		// menu 1추가 2리스트 3선택조회 4수정 5종료(9번으로)
 		while (true) {
 			System.out.println("\n1. 추가 | 2. 리스트 | 3. 조회 | 4. 수정 | 5. 삭제 | 6. 검색 | 9. 종료");
@@ -84,18 +79,18 @@ public class StudentApp {
 
 			int menu = scn.nextInt();
 			if (menu == 1) {
+				Student s1 = new Student();
 				System.out.println("학생 번호, 이름, 국어와 영어 점수 입력 필요");
 				System.out.print("학생번호 > ");
-				int stuNo = scn.nextInt();
+				s1.setStdnum(scn.nextInt());
 				System.out.print("학생이름 > ");
-				String stuName = scn.next();
+				s1.setStdName(scn.next());
 				System.out.print("영어 점수 > ");
-				int eng = scn.nextInt();
+				s1.setEngS(scn.nextInt());
 				System.out.print("국어 점수 > ");
-				int kor = scn.nextInt();
-
-				Student s1 = new Student(stuNo, stuName, eng, kor);
+				s1.setKorS(scn.nextInt());
 				service.insertStudent(s1);
+				System.out.println("완료되었습니다.");
 
 			} else if (menu == 2) {
 				System.out.println("학생 리스트");
@@ -111,16 +106,17 @@ public class StudentApp {
 				if (student == null) {
 					System.out.println("조회 결과가 없습니다.");
 				} else {
-					System.out.println(student.toString()); 
+					System.out.println(student.toString());
 				}
 			} else if (menu == 4) {
 				System.out.print("수정할 학생 번호 > ");
 				int stuNo = scn.nextInt();
+				Student s1 = new Student();
+				s1.setStdnum(stuNo);
 				System.out.print("영어 점수 > ");
-				int eng = scn.nextInt();
+				s1.setEngS(scn.nextInt());
 				System.out.print("국어 점수 > ");
-				int kor = scn.nextInt();
-				Student s1 = new Student(stuNo, null, eng, kor);
+				s1.setKorS(scn.nextInt());
 				service.modStudent(s1);
 				System.out.println(stuNo + "번 학생의 정보 수정이 완료되었습니다.");
 
@@ -147,7 +143,7 @@ public class StudentApp {
 
 			} else if (menu == 9) {
 				System.out.println("종료합니다.");
-				service.saveToFile();
+				// service.saveToFile();
 				break;
 			} else {
 				System.out.println("잘못된 입력입니다");
