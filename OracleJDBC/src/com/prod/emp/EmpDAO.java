@@ -21,6 +21,7 @@ public class EmpDAO extends DAO {
 				emp.setSalary(rs.getInt("salary"));
 				emp.setHireDate(rs.getString("hire_date").substring(0, 10));
 				emp.setJobId(rs.getString("job_id"));
+				emp.setPhoneNumber(rs.getString("phone_number"));
 				employees.add(emp);
 			}
 		} catch (SQLException e) {
@@ -31,7 +32,7 @@ public class EmpDAO extends DAO {
 		return employees;
 	}
 
-	public void insertEmp(Employee emp) { // 입력처리
+	public boolean insertEmp(Employee emp) { // 입력처리
 		conn = getConnect();
 		String sql = "insert into emp_java (employee_id, last_name, email, hire_date, job_id)\r\n"
 				+ "VALUES (?, ?, ?, ?, ?)";
@@ -44,18 +45,19 @@ public class EmpDAO extends DAO {
 			psmt.setString(5, emp.getJobId());
 			int r = psmt.executeUpdate(); // 실행 건수 리턴
 			System.out.println(r + "건 입력");
-
+			return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			return false;
 		} finally {
 			disconnect();
 		}
+
 	}
 
 	public void updateEmp(Employee emp) { // 수정처리
 		conn = getConnect();
-		String sql = "UPDATE emp_java\r\n" + "set first_name = ?, phone_number = ?, saraly = ?\r\n"
-				+ "where employee_id = ?;"; // 쿼리 작성 -> 파라메타("?")받기
+		String sql = "UPDATE emp_java\r\n" + "set first_name = ?, phone_number = ?, salary = ?\r\n"
+				+ "where employee_id = ?"; // 쿼리 작성 -> 파라메타("?")받기
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, emp.getFirstName());
@@ -85,6 +87,53 @@ public class EmpDAO extends DAO {
 		} finally {
 			disconnect();
 		}
+	}
+
+	public Employee lookupEmp(int empId) {
+		conn = getConnect();
+		Employee emp = null;
+		String sql = "select * from emp_java where employee_id = ?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, empId);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				emp = new Employee();
+				emp.setEmployeeID(rs.getInt("employee_id"));
+				emp.setFirstName(rs.getString("first_name"));
+				emp.setLastName(rs.getString("last_name"));
+				emp.setEmail(rs.getString("email"));
+				emp.setSalary(rs.getInt("salary"));
+				emp.setHireDate(rs.getString("hire_date").substring(0, 10));
+				emp.setJobId(rs.getString("job_id"));
+				emp.setPhoneNumber(rs.getString("phone_number"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return emp;
+	}
+
+	public Employee check(int empId) {
+		conn = getConnect();
+		Employee emp = null;
+		String sql = "select * from emp_java where employee_id = ?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, empId);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				emp = new Employee();
+				emp.setEmployeeID(rs.getInt("employee_id"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return emp;
 	}
 
 }
