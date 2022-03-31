@@ -108,6 +108,7 @@ public class EmpDAO extends DAO {
 				emp.setJobId(rs.getString("job_id"));
 				emp.setPhoneNumber(rs.getString("phone_number"));
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
