@@ -63,5 +63,6 @@ public class Thread {
 				System.out.println("잘못된 입력");
 			}
 		} // while문 끝
+		
 	}// execute끝
 }

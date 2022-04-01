@@ -23,7 +23,7 @@ public class ThreadExe {
 				System.out.println("잘못된 입력");
 			}
 		}
-		System.out.println("EoP");
+		//System.out.println("EoP");
 
 	} // EoM
 
