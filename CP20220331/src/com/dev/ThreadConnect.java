@@ -5,6 +5,7 @@ import java.util.*;
 
 public class ThreadConnect extends Connect {
 	// 게시글표시, 게시글등록, 체크, 수정, 삭제
+	Scanner scn = new Scanner(System.in);
 
 	public List<ThreadE> resList() { // 게시글표시
 		List<ThreadE> res = new ArrayList<ThreadE>();
@@ -46,14 +47,46 @@ public class ThreadConnect extends Connect {
 	}
 
 	public void changeRes(ThreadE t1) { // 게시글수정
+		conn = getConnect();
+		String sql = "Update thisres set res_in = ?, res_hi = ?\r\n" + "where res_num = ?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(3, t1.getResNo());
+			psmt.setString(1, t1.getResIn());
+			psmt.setString(2, t1.getResDate());
+			psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
 
 	}
 
-	public void deleteRes(int resno) {
+	public void deleteRes(int resno) { // 게시글삭제
+		conn = getConnect();
+		String sql = "delete from thisres where res_num = ?";
+		System.out.println("게시물 삭제를 확인합니다. 삭제하려면 게시물 번호'" + resno + "'를 다시 한 번 입력해 주십시오.");
+		int delete = scn.nextInt();
+		if (delete == resno) {
+			try {
+				psmt = conn.prepareStatement(sql);
+				psmt.setInt(1, resno);
+				psmt.executeUpdate();
+				System.out.println("삭제되었습니다.");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				disconnect();
+			}
+		} else {
+			System.out.println("삭제가 취소되었습니다.");
+			disconnect();
+		}
 
 	}
 
-	public int findNo() {
+	public int findNo() { // 게시글 작성시 다음 숫자 매기기
 		int r = 0;
 		conn = getConnect();
 		String sql = "select max(res_num) from thisres";
@@ -65,8 +98,23 @@ public class ThreadConnect extends Connect {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			disconnect();
 		}
 		return r;
+	}
+
+	public void clear() {
+		conn = getConnect();
+		String sql = "delete from thisres where res_num <> 0";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
 	}
 
 }

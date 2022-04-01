@@ -128,7 +128,7 @@ public class EmpDAO extends DAO {
 			if (rs.next()) {
 				emp = new Employee();
 				emp.setEmployeeID(rs.getInt("employee_id"));
-			}
+			}	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
