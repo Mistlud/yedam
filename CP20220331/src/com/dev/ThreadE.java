@@ -5,9 +5,16 @@ public class ThreadE {
 	private int resNo; // 게시글 번호
 	private String resIn; // 게시글
 	private String resDate; // 작성일시
+	private int resresNo; // 댓글 번호
 	
 	
 	
+	public int getResresNo() {
+		return resresNo;
+	}
+	public void setResresNo(int resresNo) {
+		this.resresNo = resresNo;
+	}
 	public int getResNo() {
 		return resNo;
 	}

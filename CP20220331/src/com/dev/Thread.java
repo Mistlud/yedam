@@ -11,13 +11,18 @@ public class Thread {
 		SimpleDateFormat f1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Calendar time = Calendar.getInstance();
 		String date = f1.format(time.getTime());
+		int onoff = 1;
 
 		while (true) {
 			List<ThreadE> list = tc.resList();
-			for (ThreadE res : list) {
-				System.out.println(res.toString());
+			if (onoff == 1) {
+				for (ThreadE res : list) {
+					System.out.println(res.toString());
+				}
+				System.out.println("\n1. 게시글 등록 | 2. 게시글 수정 | 3. 게시글 삭제 | 4. 메인 메뉴로 돌아가기 | 5. 댓글 조회 | 0. 게시글 접기");
+			} else if (onoff == 0) {
+				System.out.println("\n1. 게시글 등록 | 2. 게시글 수정 | 3. 게시글 삭제 | 4. 메인 메뉴로 돌아가기 | 5. 댓글 조회 | 0. 게시글 펴기");
 			}
-			System.out.println("\n1. 게시글 등록 | 2. 게시글 수정 | 3. 게시글 삭제 | 4. 메인 메뉴로 돌아가기");
 			int menu = scn.nextInt();
 			scn.nextLine();
 			if (menu == 1) {
@@ -59,10 +64,52 @@ public class Thread {
 			} else if (menu == 4) {
 				System.out.println("메인 메뉴로 돌아가기");
 				break;
+			} else if (menu == 5) {
+				System.out.println("조회할 게시글의 번호를 입력하십시오.");
+				System.out.print(" > ");
+				int f = scn.nextInt();
+				ThreadE one = tc.lookupRes(f);
+				if (one == null) {
+					System.out.println("조회 결과가 없어 메인 메뉴로 돌아갑니다.");
+					break;
+				} else {
+					System.out.println(one.toString());
+				}
+				List<ThreadE> listr = tc.resresList(f);
+				for (ThreadE res : listr) {
+					System.out.println(res.toString());
+				}
+				System.out.println("\n1. 댓글 입력 | 2. 댓글 삭제 | 9. 돌아가기");
+				int menu5 = scn.nextInt();
+				scn.nextLine();
+				if (menu5 == 1) {
+					System.out.print(" > ");
+					String resresIn = scn.nextLine();
+					ThreadE tr = new ThreadE();
+					tr.setResIn("> " + resresIn);
+					tr.setResNo(f);
+					tr.setResDate(date);
+					tr.setResresNo(tc.findNo2());
+					tc.insertResres(tr);
+					System.out.println("입력되었습니다.");
+
+				} else if (menu5 == 2) {
+					System.out.println("댓글 삭제(미구현)");
+
+				} else if (menu5 == 3) {
+					System.out.println("댓글 수정(미구현)");
+
+				} else if (menu5 == 9) {
+
+				}
+
+			} else if (menu == 0) {
+				onoff = tc.onOff(onoff);
 			} else {
+
 				System.out.println("잘못된 입력");
 			}
 		} // while문 끝
-		
+
 	}// execute끝
 }

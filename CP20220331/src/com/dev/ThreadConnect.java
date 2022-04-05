@@ -11,7 +11,7 @@ public class ThreadConnect extends Connect {
 		List<ThreadE> res = new ArrayList<ThreadE>();
 		conn = super.getConnect();
 		try {
-			psmt = conn.prepareStatement("select * from thisres order by res_num");
+			psmt = conn.prepareStatement("select * from thisres where res_num <> 0 order by res_num");
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				ThreadE t1 = new ThreadE();
@@ -104,12 +104,100 @@ public class ThreadConnect extends Connect {
 		return r;
 	}
 
+	public int findNo2() { // 댓글 작성시 다음 숫자 매기기
+		int r = 0;
+		conn = getConnect();
+		String sql = "select max(resres_num) from resres";
+		try {
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				r = rs.getInt(1) + 1;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return r;
+	}
+
 	public void clear() {
 		conn = getConnect();
 		String sql = "delete from thisres where res_num <> 0";
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+	}
+
+	public int onOff(int i) {
+		if (i == 0) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+
+	public List<ThreadE> resresList(int num) { // 댓글표시
+		List<ThreadE> res = new ArrayList<ThreadE>();
+		conn = super.getConnect();
+		try {
+			psmt = conn.prepareStatement("select * from resres\r\n" + "where res_num = ? order by resres_num");
+			psmt.setInt(1, num);
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				ThreadE t1 = new ThreadE();
+				t1.setResNo(rs.getInt("resres_num"));
+				t1.setResIn(rs.getString("res_in"));
+				t1.setResDate(rs.getString("res_hi"));
+				res.add(t1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return res;
+	}
+
+	public ThreadE lookupRes(int num) {
+		conn = getConnect();
+		ThreadE res = null;
+		String sql = "select * from thisres where res_num = ?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, num);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				res = new ThreadE();
+				res.setResNo(rs.getInt("res_num"));
+				res.setResIn(rs.getString("res_in"));
+				res.setResDate(rs.getString("res_hi"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return res;
+	}
+
+	public void insertResres(ThreadE tt1) {
+		conn = getConnect();
+		String sql = "insert into resres values (?, ?, ?, ?)";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, tt1.getResNo());
+			psmt.setString(2, tt1.getResIn());
+			psmt.setString(3, tt1.getResDate());
+			psmt.setInt(4, tt1.getResresNo());
+			psmt.executeUpdate();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
