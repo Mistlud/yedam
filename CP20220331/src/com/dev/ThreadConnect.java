@@ -86,6 +86,29 @@ public class ThreadConnect extends Connect {
 
 	}
 
+	public void deleteResres(int resresno) { // 댓글삭제
+		conn = getConnect();
+		String sql = "delete from resres where resres_num = ?";
+		System.out.println("댓글 삭제를 확인합니다. 삭제하려면 댓글 번호'" + resresno + "'를 다시 한 번 입력해 주십시오.");
+		int delete = scn.nextInt();
+		if (delete == resresno) {
+			try {
+				psmt = conn.prepareStatement(sql);
+				psmt.setInt(1, resresno);
+				psmt.executeUpdate();
+				System.out.println("삭제되었습니다.");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				disconnect();
+			}
+		} else {
+			System.out.println("삭제가 취소되었습니다.");
+			disconnect();
+		}
+
+	}
+
 	public int findNo() { // 게시글 작성시 다음 숫자 매기기
 		int r = 0;
 		conn = getConnect();

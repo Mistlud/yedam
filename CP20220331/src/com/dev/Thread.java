@@ -33,7 +33,6 @@ public class Thread {
 				te.setResNo(tc.findNo());
 				te.setResDate(date);
 				tc.insertRes(te);
-
 			} else if (menu == 2) {
 				ThreadE te = new ThreadE();
 				System.out.println("수정할 게시글의 번호를 입력하십시오.");
@@ -60,7 +59,6 @@ public class Thread {
 				} else {
 					tc.deleteRes(delete);
 				}
-
 			} else if (menu == 4) {
 				System.out.println("메인 메뉴로 돌아가기");
 				break;
@@ -92,24 +90,23 @@ public class Thread {
 					tr.setResresNo(tc.findNo2());
 					tc.insertResres(tr);
 					System.out.println("입력되었습니다.");
-
 				} else if (menu5 == 2) {
-					System.out.println("댓글 삭제(미구현)");
-
+					System.out.println("삭제할 댓글의 번호를 입력해 주십시오. 0을 입력하면 이전 화면으로 돌아갑니다.");
+					System.out.print(" > ");
+					int delete = scn.nextInt();
+					if (delete == 0) {
+					} else {
+						tc.deleteResres(delete);
+					}
 				} else if (menu5 == 3) {
 					System.out.println("댓글 수정(미구현)");
-
 				} else if (menu5 == 9) {
-
 				}
-
 			} else if (menu == 0) {
 				onoff = tc.onOff(onoff);
 			} else {
-
-				System.out.println("잘못된 입력");
+				System.out.println("잘못된 입력입니다.");
 			}
 		} // while문 끝
-
 	}// execute끝
 }
