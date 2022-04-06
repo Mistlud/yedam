@@ -86,6 +86,20 @@ public class ThreadConnect extends Connect {
 
 	}
 
+	public void deleteResPlus(int resno) { // 게시글 삭제시 거기 달린 댓글도 삭제
+		conn = getConnect();
+		String sql = "delete from resres where res_num = ?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, resno);
+			psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+	}
+
 	public void deleteResres(int resresno) { // 댓글삭제
 		conn = getConnect();
 		String sql = "delete from resres where resres_num = ?";
@@ -127,12 +141,13 @@ public class ThreadConnect extends Connect {
 		return r;
 	}
 
-	public int findNo2() { // 댓글 작성시 다음 숫자 매기기
+	public int findNo2(int ff) { // 댓글 작성시 다음 숫자 매기기
 		int r = 0;
 		conn = getConnect();
-		String sql = "select max(resres_num) from resres";
+		String sql = "select max(resres_num) from resres where res_num = ?";
 		try {
 			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, ff);
 			rs = psmt.executeQuery();
 			if (rs.next()) {
 				r = rs.getInt(1) + 1;

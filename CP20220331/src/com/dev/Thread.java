@@ -27,9 +27,19 @@ public class Thread {
 			scn.nextLine();
 			if (menu == 1) {
 				ThreadE te = new ThreadE();
-				System.out.println("게시글 등록 메뉴");
+				System.out.println("등록할 게시글의 내용을 입력하십시오. 입력을 종료하려면 '-'만 입력하십시오.");
 				System.out.print("입력 > ");
-				te.setResIn(scn.nextLine());
+				String thismp = "";
+				String stop = "-";
+				while (true) {
+					String thism = scn.nextLine();
+					if (thism.equals(stop)) {
+						break;
+					} else {
+						thismp = thismp + "\n" + thism;
+					}
+				}
+				te.setResIn(thismp);
 				te.setResNo(tc.findNo());
 				te.setResDate(date);
 				tc.insertRes(te);
@@ -43,9 +53,19 @@ public class Thread {
 				} else {
 					te.setResNo(cNum);
 					scn.nextLine();
-					System.out.println("수정할 게시글의 내용을 입력하십시오.");
-					System.out.print(" > ");
-					te.setResIn(scn.nextLine());
+					System.out.println("수정할 게시글의 내용을 입력하십시오. 입력을 종료하려면 '-'만 입력하십시오.");
+					String thismp = "";
+					String stop = "-";
+					while (true) {
+						String thism = scn.nextLine();
+						if (thism.equals(stop)) {
+							break;
+						} else {
+							thismp = thismp + "\n" + thism;
+						}
+					}
+					System.out.println(thismp);
+					te.setResIn(thismp);
 					te.setResDate(date);
 					tc.changeRes(te);
 					System.out.println("수정완료.");
@@ -58,6 +78,7 @@ public class Thread {
 
 				} else {
 					tc.deleteRes(delete);
+					tc.deleteResPlus(delete);
 				}
 			} else if (menu == 4) {
 				System.out.println("메인 메뉴로 돌아가기");
@@ -84,10 +105,10 @@ public class Thread {
 					System.out.print(" > ");
 					String resresIn = scn.nextLine();
 					ThreadE tr = new ThreadE();
-					tr.setResIn("> " + resresIn);
+					tr.setResIn("Re : " + resresIn);
 					tr.setResNo(f);
 					tr.setResDate(date);
-					tr.setResresNo(tc.findNo2());
+					tr.setResresNo(tc.findNo2(f));
 					tc.insertResres(tr);
 					System.out.println("입력되었습니다.");
 				} else if (menu5 == 2) {
