@@ -243,4 +243,21 @@ public class ThreadConnect extends Connect {
 		}
 	}
 
+	public int findres(int resnum) {
+		int r = 0;
+		conn = getConnect();
+		String sql = "select max(resres_num) from resres where res_num = ?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, resnum);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				r = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return r;
+	}
+
 }

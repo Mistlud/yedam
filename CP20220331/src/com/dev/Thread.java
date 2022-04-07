@@ -19,9 +19,11 @@ public class Thread {
 				for (ThreadE res : list) {
 					System.out.println(res.toString());
 				}
-				System.out.println("\n1. 게시글 등록 | 2. 게시글 수정 | 3. 게시글 삭제 | 4. 메인 메뉴로 돌아가기 | 5. 댓글 조회 | 0. 게시글 접기");
+				System.out.println(
+						"\n1. 게시글 등록 | 2. 게시글 수정 | 3. 게시글 삭제 | 4. 메인 메뉴로 돌아가기 | 5. 글 조회 | 6. 댓글수 조회 | 0. 게시글 접기");
 			} else if (onoff == 0) {
-				System.out.println("\n1. 게시글 등록 | 2. 게시글 수정 | 3. 게시글 삭제 | 4. 메인 메뉴로 돌아가기 | 5. 댓글 조회 | 0. 게시글 펴기");
+				System.out.println(
+						"\n1. 게시글 등록 | 2. 게시글 수정 | 3. 게시글 삭제 | 4. 메인 메뉴로 돌아가기 | 5. 글 조회 | 6. 댓글수 조회 | 0. 게시글 펴기");
 			}
 			int menu = scn.nextInt();
 			scn.nextLine();
@@ -123,6 +125,18 @@ public class Thread {
 					System.out.println("댓글 수정(미구현)");
 				} else if (menu5 == 9) {
 				}
+			} else if (menu == 6) {
+				System.out.println("게시글 번호를 입력하면 댓글 수를 조회합니다.\n0을 입력하면 댓글조회를 종료합니다.");
+				while (true) {
+					System.out.print(" > ");
+					int t1 = scn.nextInt();
+					if (t1 == 0) {
+						break;
+					} else {
+						System.out.println(tc.findres(t1) + "개의 댓글이 있습니다.\n");
+					}
+				}
+
 			} else if (menu == 0) {
 				onoff = tc.onOff(onoff);
 			} else {

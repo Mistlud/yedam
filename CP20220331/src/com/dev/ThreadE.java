@@ -41,6 +41,6 @@ public class ThreadE {
 
 	@Override
 	public String toString() {
-		return resNo + " | " + resDate + "\n▼ " + resIn + "\n――";
+		return resNo + " | " + resDate + "\n▼" + resIn + "\n";
 	}
 }
