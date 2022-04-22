@@ -12,7 +12,7 @@ let member2 = {
 }
 let member3 = {
   fullName: 'Park',
-  age: 25,
+  age: 15,
   score: 92
 }
 
