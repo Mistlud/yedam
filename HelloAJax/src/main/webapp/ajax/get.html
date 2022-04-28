@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>get</title>
+</head>
+
+<body>
+  <div id="show">
+    <table border="1">
+      <thead>
+        <th>학생번호</th>
+        <th>학생이름</th>
+        <th>영어점수</th>
+        <th>국어점수</th>
+      </thead>
+      <tbody id="list">
+
+      </tbody>
+    </table>
+  </div>
+  <script>
+    let xhtp = new XMLHttpRequest();
+    xhtp.open("get", "../studentList.json");
+    xhtp.send();
+    xhtp.onload = function () {
+      let data = JSON.parse(xhtp.response);
+      console.log(data);
+      data.forEach(element => {
+        document.getElementById('list').appendChild(makeTr(element));
+      });
+    };
+
+    function makeTr(stud) {
+      let tr = document.createElement('tr');
+      for (let field in stud) {
+        let td = document.createElement('td');
+        td.innerHTML = stud[field];
+        tr.appendChild(td);
+      }
+      return tr;
+    }
+
+
+
+
+
+  </script>
+</body>
+
+</html>

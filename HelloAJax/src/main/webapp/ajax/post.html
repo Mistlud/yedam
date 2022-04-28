@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>ajax/post.html</title>
+  <style>
+    #addFrm {
+      margin-bottom: 20px;
+    }
+
+    fieldset {
+      border: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="addFrm">
+    <form action="addStudentServlet" onsubmit="addStudent(event)">
+      <fieldset>
+        학생번호 : <input type="number" name="sno" value="101"><br>
+        학생이름 : <input type="text" name="sname" value="홍길동"><br>
+        영어점수 : <input type="number" name="eScore" value="80"><br>
+        국어점수 : <input type="number" name="kScore" value="85"><br>
+      </fieldset>
+      <input type="submit" value="전송">
+      <input type="button" value="변경">
+    </form>
+  </div>
+  <div id="studentList">
+    <table border="1">
+      <thead>
+        <tr>
+          <th>번호</th>
+          <th>이름</th>
+          <th>영어</th>
+          <th>국어</th>
+          <th>기능</th>
+        </tr>
+      </thead>
+      <tbody id="list">
+        <!-- Script -->
+      </tbody>
+    </table>
+
+  </div>
+
+  <script src="post.js">
+
+  </script>
+
+</body>
+
+</html>
