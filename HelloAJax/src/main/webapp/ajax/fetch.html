@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title> ajax/fetch.html</title>
+</head>
+
+<body>
+
+  <script src="ajax2.js">
+  </script>
+  <script>
+    let xhtp = new XMLHttpRequest();
+    xhtp.open('get', '../studentList.json');
+    xhtp.send();
+    xhtp.onload = function () {
+      console.log('xmlhttprequest방식')
+      console.log(xhtp.responseText);
+    }
+
+    fetch('../studentList.json')  // 경로 요청/주소, 설정객체
+      .then(function (result) {
+        let val = result.json();
+        console.log(val);
+        return val;
+      })  // 메인이 되는 함수
+      .then(function (result) {
+        console.log(result);
+      })
+      .catch(function () {
+        console.log('에러 발생')
+      })  //함수(에러발생시 이쪽으로 던지기)
+
+  </script>
+
+</body>
+
+</html>

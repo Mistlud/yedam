@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title> API </title>
+</head>
+
+<body>
+  <input type="text" id="sido">
+  <button id="findBtn"> 찾기 </button>
+  <hr>
+
+  <div id="show">
+    <table border="1">
+      <thead id="thead"></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <script>
+    console.log('start');
+    let fields = ['id', 'sido', 'address', 'phoneNumber', 'zipCode'];
+    
+    // this.
+    let obj = {
+      name: 'Hong',
+      age: 20,
+      showInfo: function () {
+        return this.name + ', ' + this.age;
+      }
+    }
+
+    function globalFnc() {
+      console.log(this); // window객체.
+    }
+    globalFnc();
+
+
+    function init() {
+      let url = `https://api.odcloud.kr/api/15077586/v1/centers?page=1&perPage=284&returnType=JSON&serviceKey=rFp%2BMAzQ2NXgdh2bD%2Bof%2Feo6JPqSmHRDKI%2Bbau6S2Vm90CFZ1SSFQiLP7K9h9N7esLkMM%2BXXK13DgkVIQnPysA%3D%3D`
+      let result = '';
+      let xhtp = new XMLHttpRequest();
+      xhtp.open('get', url)
+      xhtp.send();
+      xhtp.onload = loadCallBack;
+
+      let findBtn = document.getElementById("findBtn");
+      findBtn.addEventListener('click', findCallBack);
+    }
+    init();
+
+    function findCallBack() {
+      //인풋.밸류를 읽어와서 필터어레이 생성 => 테이블
+      let searchSido = document.getElementById("sido").value;
+      let filterAry = result.data.filter(function (element) {
+        return element.sido.indexOf(searchSido) != -1;
+      });
+      makeBody(filterAry);
+      document.getElementById("sido").value = '';
+    }
+
+    function loadCallBack() {
+      //필드에 있는 항목만큼만 data에서 가져옴
+      result = JSON.parse(this.responseText);
+      //여기서 let result로 result를 새로 정의했었기 때문에 Find에서 원본 result를 찾지 못하고 빈 값으로 인식했었음(let지워서 고침)
+      let filterAry = result.data.filter(function (element) {
+        return element.sido == '대전광역시';
+      });
+      console.log(filterAry);
+
+      //thead 생성
+      let head = document.getElementById('thead');
+      let tr = document.createElement('tr');
+      head.appendChild(tr);
+      fields.forEach(element => {
+        let td = document.createElement('th');
+        td.innerHTML = element.toUpperCase();
+        tr.appendChild(td);
+      });
+      makeBody(filterAry)
+    } // end of loadCallBack
+
+    function makeBody(ary) {
+      //tbody 생성
+      let body = document.getElementById('tbody');
+      let childTr = document.querySelectorAll('#tbody>tr')
+      childTr.forEach(element => {
+        body.removeChild(element)
+      });
+
+      ary.forEach(center => {  //center체크필요(얘는 모르겠음) 이제 알았음
+        let tr = document.createElement('tr');
+        body.appendChild(tr);
+
+        fields.forEach(element => {  //얘는 알겠음
+          let td = document.createElement('td');
+          if (element == 'address') {
+            let aTag = document.createElement('a');
+            aTag.setAttribute('href', `daumApi.html?x=${center.lat}&y=${center.lng}`);
+            aTag.setAttribute('target', '_blank')
+            aTag.innerHTML = center[element];
+            td.appendChild(aTag);
+          } else {
+            td.innerHTML = center[element];
+          }
+          tr.appendChild(td);
+        });
+      });
+    }
+  </script>
+</body>
+
+</html>
