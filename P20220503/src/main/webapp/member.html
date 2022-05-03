@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>member.html</title>
+</head>
+
+<body>
+  <form action="queryTest" method="post">
+    <fieldset>
+      <ul>
+        <li>ID : <input type="text" name="id"></li>
+        <li>PW : <input type="password" name="pw"></li>
+        <li>Name : <input type="text" name="name"></li>
+
+        <li>취미 :
+          <input type="checkbox" name="hobby" value="climb"> 등산
+          <input type="checkbox" name="hobby" value="sport"> 운동
+          <input type="checkbox" name="hobby" value="read"> 독서
+          <input type="checkbox" name="hobby" value="travel"> 여행
+        </li>
+        <li>성별 :
+          <input type="radio" name="gender" value="male"> 남성
+          <input type="radio" name="gender" value="female"> 여성
+        </li>
+        <li>종교 :
+          <select name="religion">
+            <option value="christ"> 기독 </option>
+            <option value="buddhish"> 불교 </option>
+            <option value="catholic"> 천주 </option>
+            <option value="atheism"> 무교 </option>
+          </select>
+        </li>
+        <li>자기소개<br><textarea cols="30" rows="10" name="intro"></textarea></li>
+        <input type="submit" value="전송">
+        <input type="reset" value="초기화">
+      </ul>
+    </fieldset>
+  </form>
+
+</body>
+
+</html>
